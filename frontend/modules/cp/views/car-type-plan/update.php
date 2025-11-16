@@ -3,14 +3,14 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\ClientPaid $model */
+/** @var common\models\CarTypePlan $model */
 
-$this->title = 'Update Client Paid: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Client Paids', 'url' => ['index']];
+$this->title = 'Update Car Type Plan: ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Car Type Plans', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="client-paid-update">
+<div class="car-type-plan-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

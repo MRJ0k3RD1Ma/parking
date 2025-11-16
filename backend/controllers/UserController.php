@@ -3,19 +3,19 @@
 namespace backend\controllers;
 
 use Yii;
+use yii\filters\auth\QueryParamAuth;
 use yii\filters\Cors;
-use yii\rest\ActiveController;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\ContentNegotiator;
+use yii\rest\Controller;
 use yii\web\Response;
 use common\models\User;
 
 /**
  * User REST API Controller
  */
-class UserController extends ActiveController
+class UserController extends Controller
 {
-    public $modelClass = 'common\models\User';
 
     /**
      * Behaviors configuration
@@ -24,17 +24,7 @@ class UserController extends ActiveController
     {
         $behaviors = parent::behaviors();
         // CORS - eng birinchi bo'lishi kerak!
-        $behaviors['corsFilter'] = [
-            'class' => Cors::class,
-            'cors' => [
-                'Origin' => ['http://localhost:5173', 'http://127.0.0.1:5173'],
-                'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
-                'Access-Control-Request-Headers' => ['*'],
-                'Access-Control-Allow-Credentials' => true,
-                'Access-Control-Max-Age' => 86400,
-                'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
-            ],
-        ];
+
         // Content negotiation - JSON formatda javob qaytaradi
         $behaviors['contentNegotiator'] = [
             'class' => ContentNegotiator::class,
@@ -45,7 +35,8 @@ class UserController extends ActiveController
 
         // Bearer Token autentifikatsiya
         $behaviors['authenticator'] = [
-            'class' => HttpBearerAuth::class,
+            'class' => \yii\filters\auth\QueryParamAuth::class,
+            'tokenParam' => 'token',
             'except' => ['options'],
         ];
 
@@ -59,58 +50,24 @@ class UserController extends ActiveController
             return null;
         }
     }
-    /**
-     * Actions configuration
-     */
-    public function actions()
-    {
-        $actions = parent::actions();
 
-        // Faqat index action kerak bo'lsa, boshqa actionlarni o'chirish
-        unset($actions['create'], $actions['update'], $actions['delete'], $actions['view']);
-
-        // Index action uchun custom configuration
-        $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
-
-        return $actions;
-    }
-
-    /**
-     * Data provider tayyorlash
-     */
-    public function prepareDataProvider()
-    {
-        $searchModel = new \yii\data\ActiveDataProvider([
-            'query' => User::find(),
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-        ]);
-
-        return $searchModel;
-    }
-
-    /**
-     * Custom index action (ixtiyoriy)
-     * Agar o'zingizning custom logikangiz kerak bo'lsa
-     */
-    /*
-    public function actionIndex()
-    {
-        $users = User::find()
-            ->select(['id', 'username', 'email', 'created_at'])
-            ->all();
-
+    public function actionMe(){
+        $user = Yii::$app->user->identity;
         return [
-            'success' => true,
-            'data' => $users,
-            'count' => count($users),
+            'success'=>true,
+            'data'=>$user
         ];
     }
-    */
+
+    public function actionLogout(){
+        $user = Yii::$app->user->identity;
+        $user->access_token = null;
+        $user->save(false);
+        Yii::$app->user->logout();
+        return [
+            'success'=>true,
+            'message'=>'User logged out',
+        ];
+    }
+
 }

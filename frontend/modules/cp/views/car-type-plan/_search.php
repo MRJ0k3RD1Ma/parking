@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\search\ClientSearch $model */
+/** @var common\models\search\CarTypePlanSearch $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="client-search">
+<div class="car-type-plan-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,23 +17,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'name') ?>
-
-    <?= $form->field($model, 'phone') ?>
-
-    <?= $form->field($model, 'number') ?>
-
     <?= $form->field($model, 'type_id') ?>
 
-    <?php // echo $form->field($model, 'price') ?>
+    <?= $form->field($model, 'hour') ?>
 
-    <?php // echo $form->field($model, 'deadline') ?>
+    <?= $form->field($model, 'created') ?>
+
+    <?= $form->field($model, 'updated') ?>
 
     <?php // echo $form->field($model, 'status') ?>
-
-    <?php // echo $form->field($model, 'created') ?>
-
-    <?php // echo $form->field($model, 'updated') ?>
 
     <?php // echo $form->field($model, 'register_id') ?>
 

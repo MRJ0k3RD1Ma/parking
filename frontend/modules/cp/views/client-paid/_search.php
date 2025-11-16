@@ -19,19 +19,21 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'client_id') ?>
 
-    <?= $form->field($model, 'payment_id') ?>
+    <?= $form->field($model, 'price') ?>
 
-    <?= $form->field($model, 'date') ?>
+    <?= $form->field($model, 'payment_id') ?>
 
     <?= $form->field($model, 'description') ?>
 
-    <?php // echo $form->field($model, 'price') ?>
+    <?php // echo $form->field($model, 'date') ?>
+
+    <?php // echo $form->field($model, 'deadline') ?>
+
+    <?php // echo $form->field($model, 'status') ?>
 
     <?php // echo $form->field($model, 'created') ?>
 
     <?php // echo $form->field($model, 'updated') ?>
-
-    <?php // echo $form->field($model, 'status') ?>
 
     <?php // echo $form->field($model, 'register_id') ?>
 

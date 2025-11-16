@@ -130,7 +130,7 @@ AppAsset::register($this);
                 </div>
             </div>
             <div class="footer-wrap pd-20 mb-20 card-box">
-                MEDICRM.UZ - <a href="tel:+998335130007" target="_blank">Ruslan Raximberganov TEL: +998(33)513-00-07</a> All rights reserved &copy;<?= date('Y')?>
+                PARKINGPRO.UZ - <a href="tel:+998973601101" target="_blank">Saxobutdinov Dilshod TEL: +998(97)360-11-01</a> All rights reserved &copy;<?= date('Y')?>
             </div>
         </div>
 

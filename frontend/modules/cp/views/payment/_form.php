@@ -14,6 +14,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'key')->dropDownList(Yii::$app->params['payment.key'], ['prompt' => '']) ?>
+
+
     <div class="form-group">
         <?= Html::submitButton('Saqlash', ['class' => 'btn btn-success']) ?>
     </div>

@@ -2,16 +2,17 @@
 
 namespace frontend\modules\cp\controllers;
 
-use common\models\ClientPaid;
-use common\models\search\ClientPaidSearch;
+use common\models\CarType;
+use common\models\CarTypePlan;
+use common\models\search\CarTypeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
 /**
- * ClientPaidController implements the CRUD actions for ClientPaid model.
+ * CarTypeController implements the CRUD actions for CarType model.
  */
-class ClientPaidController extends Controller
+class CarTypeController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +33,13 @@ class ClientPaidController extends Controller
     }
 
     /**
-     * Lists all ClientPaid models.
+     * Lists all CarType models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new ClientPaidSearch();
+        $searchModel = new CarTypeSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +49,7 @@ class ClientPaidController extends Controller
     }
 
     /**
-     * Displays a single ClientPaid model.
+     * Displays a single CarType model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,19 +62,31 @@ class ClientPaidController extends Controller
     }
 
     /**
-     * Creates a new ClientPaid model.
+     * Creates a new CarType model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new ClientPaid();
-
+        $model = new CarType();
+        $model->type = "1D";
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->register_id = Yii::$app->user->id;
                 $model->modify_id = Yii::$app->user->id;
                 if($model->save()){
+                    if($model->type == "1H"){
+                        $plan = $model->plan;
+                        foreach ($plan as $key => $value) {
+                            $m = new CarTypePlan();
+                            $m->register_id = $model->register_id;
+                            $m->modify_id = $model->modify_id;
+                            $m->type_id = $model->id;
+                            $m->hour = $value['hour'];
+                            $m->price = $value['price'];
+                            $m->save();
+                        }
+                    }
                     Yii::$app->session->setFlash('success','Ma`lumot muvoffaqiyatli saqlandi');
                 }else{
                     Yii::$app->session->setFlash('error','Ma`lumotni saqlashda xatolik');
@@ -90,7 +103,7 @@ class ClientPaidController extends Controller
     }
 
     /**
-     * Updates an existing ClientPaid model.
+     * Updates an existing CarType model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -103,12 +116,37 @@ class ClientPaidController extends Controller
         if ($this->request->isPost && $model->load($this->request->post())) {
 
             $model->modify_id = Yii::$app->user->id;
-            if($model->save()){
-            Yii::$app->session->setFlash('success','Ma`lumot muvoffaqiyatli saqlandi');
-            }else{
-            Yii::$app->session->setFlash('error','Ma`lumotni saqlashda xatolik');
-            }
-            return $this->redirect(['index']);
+                if($model->save()){
+                    if($model->type == "1H"){
+                        foreach ($model->plans as $key => $value) {
+                            $value->status = -1;
+                            $value->save(false);
+                        }
+                        $plan = $model->plan;
+                        foreach ($plan as $key => $value) {
+                            if($m = CarTypePlan::find()->where(['id'=>$key,'type_id'=>$model->id])->one()){
+                                $m->modify_id = $model->modify_id;
+                                $m->type_id = $model->id;
+                                $m->hour = $value['hour'];
+                                $m->price = $value['price'];
+                                $m->status = 1;
+                                $m->save();
+                            }else{
+                                $m = new CarTypePlan();
+                                $m->register_id = $model->register_id;
+                                $m->modify_id = $model->modify_id;
+                                $m->type_id = $model->id;
+                                $m->hour = $value['hour'];
+                                $m->price = $value['price'];
+                                $m->save();
+                            }
+                        }
+                    }
+                    Yii::$app->session->setFlash('success','Ma`lumot muvoffaqiyatli saqlandi');
+                }else{
+                    Yii::$app->session->setFlash('error','Ma`lumotni saqlashda xatolik');
+                }
+                return $this->redirect(['index']);
         }
 
         return $this->renderAjax('update', [
@@ -117,7 +155,7 @@ class ClientPaidController extends Controller
     }
 
     /**
-     * Deletes an existing ClientPaid model.
+     * Deletes an existing CarType model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -136,15 +174,15 @@ class ClientPaidController extends Controller
     }
 
     /**
-     * Finds the ClientPaid model based on its primary key value.
+     * Finds the CarType model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return ClientPaid the loaded model
+     * @return CarType the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = ClientPaid::findOne(['id' => $id])) !== null) {
+        if (($model = CarType::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

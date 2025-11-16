@@ -48,6 +48,13 @@ class SiteController extends Controller
             ],
         ];
     }
+    public function actionOptions()
+    {
+        if (Yii::$app->request->method === 'OPTIONS') {
+            Yii::$app->response->statusCode = 200;
+            return null;
+        }
+    }
     public function getphone($phone){
         $phone_new = "";
         if(strlen($phone) < 9 ){
@@ -73,7 +80,7 @@ class SiteController extends Controller
 
         $model = new LoginForm();
 
-        if ($model->load(Yii::$app->request->post(),'')) {
+        if ($model->load(Yii::$app->request->getBodyParams(),'')) {
             if($model->login()){
 
                 $user = Yii::$app->user->identity;
@@ -85,7 +92,7 @@ class SiteController extends Controller
                 return [
                     'success'=>true,
                     'token' => (string) $token,
-                    'user' => $user,
+                    'data' => $user,
                 ];
             }else{
                 return [$model->getFirstErrors()];
@@ -95,63 +102,33 @@ class SiteController extends Controller
         }
     }
 
-    public function actionLogout(){
-        $user = Yii::$app->user->identity;
-        $user->access_token = null;
-        $user->save(false);
-        Yii::$app->user->logout();
-        return [
-            'success'=>true,
-            'message'=>'User logged out',
-        ];
-    }
-
-    public function actionFiscal(){
+    public function actionLoginPin()
+    {
         $post = Yii::$app->request->post();
-        if($post['method'] == 'get-info'){
-            return [
-                "msg"=> "succes",
-                "code"=> "0",
-                "resInfo"=> [
-                    "token"=> "00120000010b02056a200014003100314090",
-                    "date"=> "2024-10-14 10:12:43"
-                ]
+        $pin = $post['pin'];
+        $model = new LoginForm();
+        $user = User::findOne(['pin'=>$pin]);
+        if($user){
 
-            ];
-        }elseif($post['method'] == 'send-receipt'){
+            $token = Yii::$app->security->generateRandomString(64);
+            $user->access_token = $token;
+            $user->save(false);
+
             return [
-                "msg"=> "succes",
-                "code"=> "0",
-                "resInfo"=> [
-                    "jsonrpc"=> "2.0",
-                    "result"=> [
-                        "AppletVersion"=> "0323",
-                        "QueuedToSendCount"=> 0
-                    ],
-                    "id"=> 1
-                ]
+                'success'=>true,
+                'token' => (string) $token,
+                'data' => $user,
             ];
-        }elseif($post['method'] == 'sale-services'){
+        }else{
+            Yii::$app->response->statusCode = 401;
             return [
-                "msg" => "succes",
-                "code"=> "0",
-                "resInfo"=> [
-                    "jsonrpc"=> "2.0",
-                    "result"=> [
-                        "TerminalID"=> "UZ191211501012",
-                        "ReceiptSeq"=> "1847",
-                        "DateTime"=> "20241014121646",
-                        "FiscalSign"=> "454042927337",
-                        "AppletVersion"=> "0323",
-                        "QRCodeURL"=> "https://ofd.soliq.uz/check?t=UZ191211501012&r=1847&c=20241014121646&s=454042927337"
-                    ],
-                    "id"=> 1
-                ]
+                'success'=>false,
+                'message'=>'Pin kod xato'
             ];
         }
-
-
-        return "novi";
     }
+
+
+
 
 }

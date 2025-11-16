@@ -53,18 +53,22 @@ return [
             'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
-                'auth'=>'site/login',
-                'POST /'=>'site/fiscal',
+                'POST auth'=>'site/login',
+                'POST auth/pin'=>'site/login-pin',
+                'POST auth/logout'=>'user/logout',
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'user',
+                    'pluralize' => false,
                     'extraPatterns' => [
-                        'OPTIONS' => 'options',
+                        'GET me'=>'me',
+
                     ],
                 ],
             ],
         ]
 
     ],
+
     'params' => $params,
 ];

@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
 
             <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
-            <?= $form->field($model, 'prefix')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'pin')->textInput(['maxlength' => true]) ?>
 
             <?= $form->field($model, 'role_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\UserRole::find()->all(),'id','name')) ?>
 

@@ -4,25 +4,25 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\ClientPaid $model */
+/** @var common\models\Car $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="client-paid-form">
+<div class="car-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'client_id')->textInput() ?>
+    <?= $form->field($model, 'number')->textInput() ?>
+
+    <?= $form->field($model, 'type_id')->textInput() ?>
 
     <?= $form->field($model, 'price')->textInput() ?>
 
+    <?= $form->field($model, 'enter_time')->textInput() ?>
+
+    <?= $form->field($model, 'exit_time')->textInput() ?>
+
     <?= $form->field($model, 'payment_id')->textInput() ?>
-
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'date')->textInput() ?>
-
-    <?= $form->field($model, 'deadline')->textInput() ?>
 
     <?= $form->field($model, 'status')->textInput() ?>
 

@@ -18,7 +18,7 @@ class PaymentSearch extends Payment
     {
         return [
             [['id', 'status', 'register_id', 'modify_id'], 'integer'],
-            [['name', 'created', 'updated'], 'safe'],
+            [['name', 'key', 'created', 'updated'], 'safe'],
         ];
     }
 
@@ -69,7 +69,8 @@ class PaymentSearch extends Payment
             'modify_id' => $this->modify_id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'key', $this->key]);
 
         return $dataProvider;
     }

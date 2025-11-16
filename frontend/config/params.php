@@ -13,6 +13,21 @@ return [
         0=>'Yo`q',
         1=>'Ha'
     ],
+    'payment.key'=>[
+        'cash'=>'Naqt',
+        'card'=>'Bank kartasi',
+        'bank'=>'Bank o`tkazmasi'
+    ],
+    'contract.type'=>[
+        'MONTHLY'=>'Oylik',
+        'DAILY'=>'Kunlik'
+    ],
+    'car.payment.type'=>[
+        '1D' => 'Kunlik',
+        '1T' => 'Bir martalik',
+        '1H' => 'Soatbay',
+        '1HI' => 'Soatbay kirish summasi bilan',
+    ],
     'status'=>[
         1=>'Aktiv',
         0=>'Deaktiv',

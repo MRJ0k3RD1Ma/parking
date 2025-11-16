@@ -2,16 +2,16 @@
 
 namespace frontend\modules\cp\controllers;
 
-use common\models\ClientPaid;
-use common\models\search\ClientPaidSearch;
+use common\models\CarTypePlan;
+use common\models\search\CarTypePlanSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
 /**
- * ClientPaidController implements the CRUD actions for ClientPaid model.
+ * CarTypePlanController implements the CRUD actions for CarTypePlan model.
  */
-class ClientPaidController extends Controller
+class CarTypePlanController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +32,13 @@ class ClientPaidController extends Controller
     }
 
     /**
-     * Lists all ClientPaid models.
+     * Lists all CarTypePlan models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new ClientPaidSearch();
+        $searchModel = new CarTypePlanSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +48,7 @@ class ClientPaidController extends Controller
     }
 
     /**
-     * Displays a single ClientPaid model.
+     * Displays a single CarTypePlan model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,13 +61,13 @@ class ClientPaidController extends Controller
     }
 
     /**
-     * Creates a new ClientPaid model.
+     * Creates a new CarTypePlan model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new ClientPaid();
+        $model = new CarTypePlan();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -90,7 +90,7 @@ class ClientPaidController extends Controller
     }
 
     /**
-     * Updates an existing ClientPaid model.
+     * Updates an existing CarTypePlan model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -117,7 +117,7 @@ class ClientPaidController extends Controller
     }
 
     /**
-     * Deletes an existing ClientPaid model.
+     * Deletes an existing CarTypePlan model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -136,15 +136,15 @@ class ClientPaidController extends Controller
     }
 
     /**
-     * Finds the ClientPaid model based on its primary key value.
+     * Finds the CarTypePlan model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return ClientPaid the loaded model
+     * @return CarTypePlan the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = ClientPaid::findOne(['id' => $id])) !== null) {
+        if (($model = CarTypePlan::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

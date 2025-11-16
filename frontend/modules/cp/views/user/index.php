@@ -29,8 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
 
-//                    'id',
-//                    'name',
                     [
                         'attribute'=>'name',
                         'format'=>'raw',
@@ -41,19 +39,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'username',
                     'phone',
-                    'prefix',
-//                    'password',
-//                    'auth_key',
-                    //'token',
-                    //'code',
-                    //'access_token',
-                    //'updated',
-                    //'role_id',
+                    'pin',
 
-                    //'image',
-                    //'soato_id',
-
-//                    'status',
                     [
                         'attribute'=>'status',
                         'value'=>function($d){

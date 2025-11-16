@@ -1,26 +1,26 @@
 <?php
 
-use common\models\Client;
+use common\models\CarType;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var common\models\search\ClientSearch $searchModel */
+/** @var common\models\search\CarTypeSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Mijozlar mashinalari';
+$this->title = 'Moshina turlari';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="client-index">
+<div class="car-type-index">
 
 <div class="card">
     <div class="card-body">
 
 
     <p>
-        <?= Html::button('Mijoz moshinasi qo`shish', ['class' => 'btn btn-success md-btncreate','value'=>Yii::$app->urlManager->createUrl(['/cp/client/create'])]) ?>
+        <?= Html::button('Moshina turi qo`shish', ['class' => 'btn btn-success md-btncreate','value'=>Yii::$app->urlManager->createUrl(['/cp/car-type/create'])]) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -33,42 +33,37 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute'=>'name',
                 'value'=>function($d){
-                    $url = Yii::$app->urlManager->createUrl(['/cp/client/update','id'=>$d->id]);
+                    $url = Yii::$app->urlManager->createUrl(['/cp/car-type/update','id'=>$d->id]);
                     return Html::button($d->name,['class'=>'btn btn-link md-btnupdate','value'=>$url]);
                 },
                 'format'=>'raw',
             ],
 //            'id',
 //            'name',
-            'phone',
-            'number',
-//            'type_id',
+//            'type',
             [
-                'attribute'=>'type_id',
-                'value'=>function($d){return $d->type->name;},
-                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\CarType::find()->where(['status'=>1])->all(),'id','name'),
+                'attribute'=>'type',
+                'value'=>function($d){
+                    return $d->type;
+                }
             ],
-            'price',
-            'deadline',
+//            'daily',
+//            'onetime:datetime',
+            //'hourly',
+            //'hourly_enter',
+            //'enter',
+            //'free_time:datetime',
             //'status',
-            //'created',
-            //'updated',
             //'register_id',
             //'modify_id',
+            //'created',
+            //'updated',
             [
                 'attribute'=>'status',
                 'value'=>function($d){
                     return Yii::$app->params['status'][$d->status];
                 },
                 'filter'=>Yii::$app->params['status'],
-            ],
-            [
-                'label'=>'',
-                'format'=>'raw',
-                'value'=>function($d){
-                    $url = Yii::$app->urlManager->createUrl(['/cp/client/delete','id'=>$d->id]);
-                    return Html::a("<span class='fa fa-trash'></span>",$url,['data-confirm'=>'Are you sure you want to delete?','data-method'=>'post','class'=>'btn btn-danger']);
-                }
             ],
         ],
     ]); ?>

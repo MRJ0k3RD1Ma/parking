@@ -17,9 +17,8 @@ class ClientPaidSearch extends ClientPaid
     public function rules()
     {
         return [
-            [['id', 'client_id', 'payment_id', 'status', 'register_id', 'modify_id'], 'integer'],
-            [['date', 'description', 'created', 'updated'], 'safe'],
-            [['price'], 'number'],
+            [['id', 'client_id', 'price', 'payment_id', 'status', 'register_id', 'modify_id'], 'integer'],
+            [['description', 'date', 'deadline', 'created', 'updated'], 'safe'],
         ];
     }
 
@@ -64,12 +63,13 @@ class ClientPaidSearch extends ClientPaid
         $query->andFilterWhere([
             'id' => $this->id,
             'client_id' => $this->client_id,
+            'price' => $this->price,
             'payment_id' => $this->payment_id,
             'date' => $this->date,
-            'price' => $this->price,
+            'deadline' => $this->deadline,
+            'status' => $this->status,
             'created' => $this->created,
             'updated' => $this->updated,
-            'status' => $this->status,
             'register_id' => $this->register_id,
             'modify_id' => $this->modify_id,
         ]);

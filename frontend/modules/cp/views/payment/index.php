@@ -34,11 +34,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'name',
                 'value'=>function($d){
                     $url = Yii::$app->urlManager->createUrl(['/cp/payment/update','id'=>$d->id]);
-                    return Html::button($d->name,['class'=>'btn btn-link md-btnupdate','value'=>$url]);
+                    return Html::button($d->name,['value'=>$url,'class'=>'btn btn-link md-btnupdate']);
                 },
                 'format'=>'raw',
             ],
-            'created',
+//            'key',
+            [
+                'attribute'=>'key',
+                'value'=>function($d){
+                    return Yii::$app->params['payment.key'][$d->key];
+                },
+                'filter'=>Yii::$app->params['payment.key'],
+            ],
             [
                 'attribute'=>'status',
                 'value'=>function($d){
@@ -46,13 +53,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'filter'=>Yii::$app->params['status'],
             ],
+            'created',
             [
                 'label'=>'',
+                'format'=>'raw',
                 'value'=>function($d){
                     $url = Yii::$app->urlManager->createUrl(['/cp/payment/delete','id'=>$d->id]);
-                    return Html::a('<span class="fa fa-trash"></span>',$url,['class'=>'btn btn-danger', 'data-method'=>'post','data-confirm'=>'Siz rostdan ham ushbu elementni o`chirmoqchimisiz?']);
-                },
-                'format'=>'raw'
+                    return Html::a("<span class='fa fa-trash'></span>",$url,['class'=>'btn btn-danger','data-method'=>'post','data-confirm'=>'Are you sure you want to delete this item?']);
+                }
             ],
         ],
     ]); ?>

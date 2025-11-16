@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var common\models\Payment $model */
+/** @var common\models\CarType $model */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Car Types', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="payment-view">
+<div class="car-type-view">
     <div class="card">
         <div class="card-body">
 
@@ -33,12 +33,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'key',
+            'type',
+            'daily',
+            'onetime:datetime',
+            'hourly',
+            'hourly_enter',
+            'enter',
+            'free_time:datetime',
             'status',
-            'created',
-            'updated',
             'register_id',
             'modify_id',
+            'created',
+            'updated',
         ],
     ]) ?>
 

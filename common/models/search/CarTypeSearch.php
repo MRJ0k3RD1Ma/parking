@@ -4,12 +4,12 @@ namespace common\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Client;
+use common\models\CarType;
 use Yii;
 /**
- * ClientSearch represents the model behind the search form of `common\models\Client`.
+ * CarTypeSearch represents the model behind the search form of `common\models\CarType`.
  */
-class ClientSearch extends Client
+class CarTypeSearch extends CarType
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class ClientSearch extends Client
     public function rules()
     {
         return [
-            [['id', 'phone', 'type_id', 'price', 'status', 'register_id', 'modify_id'], 'integer'],
-            [['name', 'number', 'deadline', 'created', 'updated'], 'safe'],
+            [['id', 'daily', 'onetime', 'hourly', 'hourly_enter', 'enter', 'free_time', 'status', 'register_id', 'modify_id'], 'integer'],
+            [['name', 'type', 'created', 'updated'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class ClientSearch extends Client
      */
     public function search($params, $formName = null)
     {
-        $query = Client::find()->orderBy(['id'=>SORT_DESC]);
+        $query = CarType::find()->orderBy(['id'=>SORT_DESC]);
 
         // add conditions that should always apply here
 
@@ -62,19 +62,21 @@ class ClientSearch extends Client
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'phone' => $this->phone,
-            'type_id' => $this->type_id,
-            'price' => $this->price,
-            'deadline' => $this->deadline,
+            'daily' => $this->daily,
+            'onetime' => $this->onetime,
+            'hourly' => $this->hourly,
+            'hourly_enter' => $this->hourly_enter,
+            'enter' => $this->enter,
+            'free_time' => $this->free_time,
             'status' => $this->status,
-            'created' => $this->created,
-            'updated' => $this->updated,
             'register_id' => $this->register_id,
             'modify_id' => $this->modify_id,
+            'created' => $this->created,
+            'updated' => $this->updated,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'number', $this->number]);
+            ->andFilterWhere(['like', 'type', $this->type]);
 
         return $dataProvider;
     }

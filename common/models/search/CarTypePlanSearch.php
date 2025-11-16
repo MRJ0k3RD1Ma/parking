@@ -4,12 +4,12 @@ namespace common\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Client;
+use common\models\CarTypePlan;
 use Yii;
 /**
- * ClientSearch represents the model behind the search form of `common\models\Client`.
+ * CarTypePlanSearch represents the model behind the search form of `common\models\CarTypePlan`.
  */
-class ClientSearch extends Client
+class CarTypePlanSearch extends CarTypePlan
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class ClientSearch extends Client
     public function rules()
     {
         return [
-            [['id', 'phone', 'type_id', 'price', 'status', 'register_id', 'modify_id'], 'integer'],
-            [['name', 'number', 'deadline', 'created', 'updated'], 'safe'],
+            [['id', 'type_id', 'hour', 'status', 'register_id', 'modify_id'], 'integer'],
+            [['created', 'updated'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class ClientSearch extends Client
      */
     public function search($params, $formName = null)
     {
-        $query = Client::find()->orderBy(['id'=>SORT_DESC]);
+        $query = CarTypePlan::find()->orderBy(['id'=>SORT_DESC]);
 
         // add conditions that should always apply here
 
@@ -62,19 +62,14 @@ class ClientSearch extends Client
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'phone' => $this->phone,
             'type_id' => $this->type_id,
-            'price' => $this->price,
-            'deadline' => $this->deadline,
-            'status' => $this->status,
+            'hour' => $this->hour,
             'created' => $this->created,
             'updated' => $this->updated,
+            'status' => $this->status,
             'register_id' => $this->register_id,
             'modify_id' => $this->modify_id,
         ]);
-
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'number', $this->number]);
 
         return $dataProvider;
     }

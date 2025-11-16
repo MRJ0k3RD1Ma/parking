@@ -1,26 +1,26 @@
 <?php
 
-use common\models\ClientPaid;
+use common\models\Car;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var common\models\search\ClientPaidSearch $searchModel */
+/** @var common\models\search\CarSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Client Paids';
+$this->title = 'Cars';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="client-paid-index">
+<div class="car-index">
 
 <div class="card">
     <div class="card-body">
 
 
     <p>
-        <?= Html::button('Yaratish Client Paid', ['class' => 'btn btn-success md-btncreate','value'=>Yii::$app->urlManager->createUrl(['create'])]) ?>
+        <?= Html::button('Yaratish Car', ['class' => 'btn btn-success md-btncreate','value'=>Yii::$app->urlManager->createUrl(['create'])]) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -39,12 +39,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'=>'raw',
             ],
             'id',
-            'client_id',
+            'number',
+            'type_id',
             'price',
-            'payment_id',
-            'description:ntext',
-            //'date',
-            //'deadline',
+            'enter_time',
+            //'exit_time',
+            //'payment_id',
             //'status',
             //'created',
             //'updated',
