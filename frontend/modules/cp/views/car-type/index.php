@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute'=>'type',
                 'value'=>function($d){
-                    return $d->type;
+                    return Yii::$app->params['car.payment.type'][$d->type];
                 }
             ],
 //            'daily',
@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'status',
             //'register_id',
             //'modify_id',
-            //'created',
+            'created',
             //'updated',
             [
                 'attribute'=>'status',
@@ -64,6 +64,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Yii::$app->params['status'][$d->status];
                 },
                 'filter'=>Yii::$app->params['status'],
+            ],
+            [
+                'label'=>'',
+                'format'=>'raw',
+                'value'=>function($d){
+                    $url = Yii::$app->urlManager->createUrl(['/cp/car-type/delete','id'=>$d->id]);
+                    return Html::a("<span class='fa fa-trash'></span>",$url,['class'=>'btn btn-danger', 'data-method'=>'post','data-confirm'=>'Are you sure you want to delete this item?']);
+                }
             ],
         ],
     ]); ?>

@@ -69,13 +69,13 @@ class CarTypeController extends Controller
     public function actionCreate()
     {
         $model = new CarType();
-        $model->type = "1D";
+        $model->type = "1H";
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->register_id = Yii::$app->user->id;
                 $model->modify_id = Yii::$app->user->id;
                 if($model->save()){
-                    if($model->type == "1H"){
+                    if($model->type == "1H" or $model->type == "1HI"){
                         $plan = $model->plan;
                         foreach ($plan as $key => $value) {
                             $m = new CarTypePlan();
@@ -117,7 +117,7 @@ class CarTypeController extends Controller
 
             $model->modify_id = Yii::$app->user->id;
                 if($model->save()){
-                    if($model->type == "1H"){
+                    if($model->type == "1H" or $model->type == "1HI"){
                         foreach ($model->plans as $key => $value) {
                             $value->status = -1;
                             $value->save(false);
@@ -165,6 +165,7 @@ class CarTypeController extends Controller
     {
         $model = $this->findModel($id);
         $model->status = -1;
+        $model->modify_id = Yii::$app->user->id;
         if($model->save()){
             Yii::$app->session->setFlash('success','Ma`lumot o`chirildi');
         }else{

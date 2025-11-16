@@ -2,16 +2,16 @@
 
 namespace frontend\modules\cp\controllers;
 
-use common\models\Payment;
-use common\models\search\PaymentSearch;
+use common\models\Camera;
+use common\models\search\CameraSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
 /**
- * PaymentController implements the CRUD actions for Payment model.
+ * CameraController implements the CRUD actions for Camera model.
  */
-class PaymentController extends Controller
+class CameraController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +32,13 @@ class PaymentController extends Controller
     }
 
     /**
-     * Lists all Payment models.
+     * Lists all Camera models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new PaymentSearch();
+        $searchModel = new CameraSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +48,7 @@ class PaymentController extends Controller
     }
 
     /**
-     * Displays a single Payment model.
+     * Displays a single Camera model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,13 +61,13 @@ class PaymentController extends Controller
     }
 
     /**
-     * Creates a new Payment model.
+     * Creates a new Camera model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Payment();
+        $model = new Camera();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -90,7 +90,7 @@ class PaymentController extends Controller
     }
 
     /**
-     * Updates an existing Payment model.
+     * Updates an existing Camera model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -117,7 +117,7 @@ class PaymentController extends Controller
     }
 
     /**
-     * Deletes an existing Payment model.
+     * Deletes an existing Camera model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -137,15 +137,15 @@ class PaymentController extends Controller
     }
 
     /**
-     * Finds the Payment model based on its primary key value.
+     * Finds the Camera model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Payment the loaded model
+     * @return Camera the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Payment::findOne(['id' => $id])) !== null) {
+        if (($model = Camera::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

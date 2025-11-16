@@ -1,26 +1,26 @@
 <?php
 
-use common\models\Client;
+use common\models\Camera;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var common\models\search\ClientSearch $searchModel */
+/** @var common\models\search\CameraSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Mijozlar mashinalari';
+$this->title = 'Kameralar ro`yhati';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="client-index">
+<div class="camera-index">
 
 <div class="card">
     <div class="card-body">
 
 
     <p>
-        <?= Html::button('Mijoz moshinasi qo`shish', ['class' => 'btn btn-success md-btncreate','value'=>Yii::$app->urlManager->createUrl(['/cp/client/create'])]) ?>
+        <?= Html::button('Kamera qo`shish', ['class' => 'btn btn-success md-btncreate','value'=>Yii::$app->urlManager->createUrl(['/cp/camera/create'])]) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -33,24 +33,16 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute'=>'name',
                 'value'=>function($d){
-                    $url = Yii::$app->urlManager->createUrl(['/cp/client/view','id'=>$d->id]);
-                    return Html::a($d->name,$url);
+                    $url = Yii::$app->urlManager->createUrl(['/cp/camera/update','id'=>$d->id]);
+                    return Html::button($d->name,['class'=>'btn btn-link md-btnupdate', 'value'=>$url,]);
                 },
                 'format'=>'raw',
             ],
 //            'id',
-//            'name',
-            'phone',
-            'number',
-//            'type_id',
-            [
-                'attribute'=>'type_id',
-                'value'=>function($d){return $d->type->name;},
-                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\CarType::find()->where(['status'=>1])->all(),'id','name'),
-            ],
-            'price',
-            'deadline',
-            //'status',
+            'name',
+            'type',
+            'ipaddress',
+//            'status',
             //'created',
             //'updated',
             //'register_id',
@@ -66,9 +58,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label'=>'',
                 'format'=>'raw',
                 'value'=>function($d){
-                    $url = Yii::$app->urlManager->createUrl(['/cp/client/delete','id'=>$d->id]);
-                    return
-                        Html::a("<span class='fa fa-trash'></span>",$url,['data-confirm'=>'Are you sure you want to delete?','data-method'=>'post','class'=>'btn btn-danger']);
+                    $url = Yii::$app->urlManager->createUrl(['/cp/camera/delete','id'=>$d->id]);
+                    return Html::a("<span class='fa fa-trash'></span>",$url,['class'=>'btn btn-danger', 'data-method'=>'post','data-confirm'=>'Are you sure you want to delete this item?']);
                 }
             ],
         ],

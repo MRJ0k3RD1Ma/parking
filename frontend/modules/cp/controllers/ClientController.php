@@ -3,6 +3,8 @@
 namespace frontend\modules\cp\controllers;
 
 use common\models\Client;
+use common\models\ClientPaid;
+use common\models\search\ClientPaidSearch;
 use common\models\search\ClientSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -55,9 +57,16 @@ class ClientController extends Controller
      */
     public function actionView($id)
     {
+        $searchModel = new ClientPaidSearch();
+        $searchModel->client_id = $id;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
         return $this->render('view', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
             'model' => $this->findModel($id),
         ]);
+
     }
 
     /**
@@ -128,12 +137,58 @@ class ClientController extends Controller
     {
         $model = $this->findModel($id);
         $model->status = -1;
+        $model->modify_id = Yii::$app->user->id;
         if($model->save()){
             Yii::$app->session->setFlash('success','Ma`lumot o`chirildi');
         }else{
             Yii::$app->session->setFlash('success','Ma`lumotni o`chirishda xatolik');
         }
         return $this->redirect(['index']);
+    }
+
+    public function actionPay($id)
+    {
+        $model = new ClientPaid();
+        $model->client_id = $id;
+        $model->date = date('Y-m-d');
+        $model->deadline = date('Y-m-d');
+        if($model->load($this->request->post())){
+            $model->register_id = Yii::$app->user->id;
+            $model->modify_id = Yii::$app->user->id;
+            if($model->save()){
+                $client = $model->client;
+                $client->deadline = $model->deadline;
+                $client->save(false);
+                Yii::$app->session->setFlash('success','Ma`lumot saqlandi');
+            }else{
+                Yii::$app->session->setFlash('error','Ma`lumot saqlashda xatolik');
+            }
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+        return $this->renderAjax('pay', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionPayupdate($id)
+    {
+        $model = ClientPaid::findOne($id);
+        if($model->load($this->request->post())){
+            $model->register_id = Yii::$app->user->id;
+            $model->modify_id = Yii::$app->user->id;
+            if($model->save()){
+                $client = $model->client;
+                $client->deadline = $model->deadline;
+                $client->save(false);
+                Yii::$app->session->setFlash('success','Ma`lumot saqlandi');
+            }else{
+                Yii::$app->session->setFlash('error','Ma`lumot saqlashda xatolik');
+            }
+            return $this->redirect(['view', 'id' => $model->client_id]);
+        }
+        return $this->renderAjax('pay', [
+            'model' => $model,
+        ]);
     }
 
     /**

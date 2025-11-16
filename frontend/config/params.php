@@ -1,5 +1,6 @@
 <?php
 return [
+    'calculatetype'=>'1H',
     'adminEmail' => 'admin@example.com',
     'bot'=>'8393931998:AAHOha7Vg098E-oTEOiYguhLHWeWmE0MDAQ',
     'chatIds'=>[
@@ -28,6 +29,7 @@ return [
         '1H' => 'Soatbay',
         '1HI' => 'Soatbay kirish summasi bilan',
     ],
+    'camera.type'=>[ 'ENTER' => 'Kirish', 'EXIT' => 'Chiqish', ],
     'status'=>[
         1=>'Aktiv',
         0=>'Deaktiv',

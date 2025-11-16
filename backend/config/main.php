@@ -62,7 +62,15 @@ return [
                     'pluralize' => false,
                     'extraPatterns' => [
                         'GET me'=>'me',
-
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'camera',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET '=>'index',
+                        'GET by-ip'=>'by-ip'
                     ],
                 ],
             ],

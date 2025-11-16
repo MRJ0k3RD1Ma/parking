@@ -16,7 +16,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'type')->dropDownList(Yii::$app->params['car.payment.type'], ['prompt' => '']) ?>
 
     <div id="1D" style="display: <?= $model->type == '1D' ? 'block' : 'none'?>">
         <?= $form->field($model, 'daily')->textInput() ?>
@@ -26,7 +25,11 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'onetime')->textInput() ?>
     </div>
 
-    <div id="1H" style="display: <?= $model->type == '1H' ? 'block' : 'none'?>">
+    <div id="1H" style="display: <?= ($model->type == '1H' or $model->type == '1HI') ? 'block' : 'none'?>">
+        <div id="1HI" style="display: <?= $model->type == '1HI' ? 'block' : 'none'?>">
+            <?= $form->field($model, 'enter')->textInput() ?>
+
+        </div>
         <div id="prices" data-maxid="<?= $model->isNewRecord ? "1" : \common\models\CarTypePlan::find()->max('id')+1 ?>" style="border: 1px solid #979393; padding:10px; border-radius: 10px;">
             <?php if(!$model->isNewRecord){?>
                 <?php foreach ($model->plans as $item):?>
@@ -62,18 +65,7 @@ use yii\widgets\ActiveForm;
         <button class="btn btn-info" id="hourly-plan_add" type="button" style="width: 100%"><span class="fa fa-plus"></span></button>
     </div>
 
-    <div id="1HI" style="display: <?= $model->type == '1HI' ? 'block' : 'none'?>">
-        <div class="row">
-            <div class="col-md-6">
-                <?= $form->field($model, 'hourly_enter')->textInput() ?>
-            </div>
-            <div class="col-md-6">
-                <?= $form->field($model, 'enter')->textInput() ?>
 
-            </div>
-        </div>
-
-    </div>
 
 
     <?= $form->field($model, 'free_time')->textInput() ?>
@@ -105,6 +97,7 @@ use yii\widgets\ActiveForm;
                 $('#1H').show();
             }
             if(type == '1HI'){
+                $('#1H').show();
                 $('#1HI').show();
             }
         });

@@ -70,7 +70,12 @@
                     </a>
                 </li>
 
-
+                <li>
+                    <a href="<?= Yii::$app->urlManager->createUrl(['/cp/camera'])?>" class="dropdown-toggle no-arrow <?= Yii::$app->controller->id == 'camera' ? 'active' : ''?>">
+                        <span class="micon bi bi-camera"></span>
+                        <span class="mtext">Kameralar</span>
+                    </a>
+                </li>
 
 
 

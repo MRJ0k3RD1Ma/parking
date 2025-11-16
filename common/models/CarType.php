@@ -89,6 +89,6 @@ class CarType extends \yii\db\ActiveRecord
     }
 
     public function getPlans(){
-        return $this->hasMany(CarTypePlan::class, ['type_id' => 'id']);
+        return $this->hasMany(CarTypePlan::class, ['type_id' => 'id'])->where(['status' => 1]);
     }
 }

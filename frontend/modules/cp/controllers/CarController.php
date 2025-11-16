@@ -127,6 +127,7 @@ class CarController extends Controller
     {
         $model = $this->findModel($id);
         $model->status = -1;
+        $model->modify_id = Yii::$app->user->id;
         if($model->save()){
             Yii::$app->session->setFlash('success','Ma`lumot o`chirildi');
         }else{
