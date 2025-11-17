@@ -99,10 +99,9 @@ class DoorController extends Controller
                         ]
                     ];
 
-                }elseif($payment_id){
+                }else{
                     if($model = Car::find()->where(['status'=>1,'number'=>$plate])->andWhere(['is','payment_id',null])->orderBy(['id'=>SORT_DESC])->one()){
                         $price = $this->Calc($model);
-                        $model->payment_id = $payment_id;
                         $model->exit_time = date('Y-m-d H:i:s');
                         $model->price = $price;
                         $model->modify_id = Yii::$app->user->id;
@@ -141,9 +140,6 @@ class DoorController extends Controller
                                 'errors'=>$model->errors
                             ];
                         }
-
-
-
                     }
                     Yii::$app->response->setStatusCode(400);
                     return [
@@ -151,13 +147,9 @@ class DoorController extends Controller
                         'message'=>'Bunday moshina topilmadi'
                     ];
 
-                }else{
-                    Yii::$app->response->setStatusCode(400);
-                    return [
-                        'success'=>false,
-                        'message'=>'Ma`lumotlar yetarli emas'
-                    ];
                 }
+
+
 
             }else{
                 Yii::$app->response->setStatusCode(400);
@@ -180,6 +172,7 @@ class DoorController extends Controller
     {
         $post = Yii::$app->request->post();
         $model = Car::find()->where(['id'=>$id])->one();
+        $payment_id = isset($post['payment_id']) ? $post['payment_id'].'' : '';
         $terminal_id = isset($post['terminal_id']) ? $post['terminal_id'].'' : '';
         $date_time = isset($post['date_time']) ? $post['date_time'].'' : '';
         $fiscal_sign = isset($post['fiscal_sign']) ? $post['fiscal_sign'].'' : '';
@@ -192,6 +185,7 @@ class DoorController extends Controller
             $model->fiscal_sign = $fiscal_sign;
             $model->applet_version = $applet_version;
             $model->qr_code_url = $qr_code_url;
+            $model->payment_id = $payment_id;
             $model->save(false);
             return [
                 'success'=>true,
