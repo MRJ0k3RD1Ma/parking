@@ -26,7 +26,9 @@ class CameraController extends Controller
     {
         $behaviors = parent::behaviors();
         // CORS - eng birinchi bo'lishi kerak!
-
+        $behaviors['corsFilter']= [
+            'class' => Cors::class,
+        ];
         // Content negotiation - JSON formatda javob qaytaradi
         $behaviors['contentNegotiator'] = [
             'class' => ContentNegotiator::class,

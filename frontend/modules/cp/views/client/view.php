@@ -85,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute'=>'date',
                                 'value'=>function($d){
                                     $url = Yii::$app->urlManager->createUrl(['/cp/client/payupdate','id'=>$d->id]);
-                                    return Html::a($d->date,$url);
+                                    return Html::button($d->date,['class'=>'btn btn-link md-btnupdate','value'=>$url]);
                                 },
                                 'format'=>'raw',
                             ],

@@ -74,9 +74,12 @@ class ClientPaidController extends Controller
                 $model->register_id = Yii::$app->user->id;
                 $model->modify_id = Yii::$app->user->id;
                 if($model->save()){
-                    Yii::$app->session->setFlash('success','Ma`lumot muvoffaqiyatli saqlandi');
+                    $client = $model->client;
+                    $client->deadline = $model->deadline;
+                    $client->save(false);
+                    Yii::$app->session->setFlash('success','Ma`lumot saqlandi');
                 }else{
-                    Yii::$app->session->setFlash('error','Ma`lumotni saqlashda xatolik');
+                    Yii::$app->session->setFlash('error','Ma`lumot saqlashda xatolik');
                 }
                 return $this->redirect(['index']);
             }
@@ -104,9 +107,12 @@ class ClientPaidController extends Controller
 
             $model->modify_id = Yii::$app->user->id;
             if($model->save()){
-            Yii::$app->session->setFlash('success','Ma`lumot muvoffaqiyatli saqlandi');
+                $client = $model->client;
+                $client->deadline = $model->deadline;
+                $client->save(false);
+                Yii::$app->session->setFlash('success','Ma`lumot saqlandi');
             }else{
-            Yii::$app->session->setFlash('error','Ma`lumotni saqlashda xatolik');
+                Yii::$app->session->setFlash('error','Ma`lumot saqlashda xatolik');
             }
             return $this->redirect(['index']);
         }

@@ -11,6 +11,7 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log',],
+    'timeZone' => 'Asia/Tashkent',
     'modules' => [],
     'components' => [
         'request' => [
@@ -71,6 +72,17 @@ return [
                     'extraPatterns' => [
                         'GET '=>'index',
                         'GET by-ip'=>'by-ip'
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'door',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'POST'=>'index',
+                        'POST calc'=>'calc',
+                        'GET type'=>'type',
+                        'POST setfiscal'=>'setfiscal'
                     ],
                 ],
             ],

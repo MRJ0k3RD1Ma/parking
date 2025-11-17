@@ -69,7 +69,7 @@ class CarTypeController extends Controller
     public function actionCreate()
     {
         $model = new CarType();
-        $model->type = "1H";
+        $model->type = Yii::$app->params['calculatetype'];
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->register_id = Yii::$app->user->id;

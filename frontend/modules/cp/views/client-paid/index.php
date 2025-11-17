@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var common\models\search\ClientPaidSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Client Paids';
+$this->title = 'Mijoz to`lovlari';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="client-paid-index">
@@ -19,9 +19,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card-body">
 
 
-    <p>
-        <?= Html::button('Yaratish Client Paid', ['class' => 'btn btn-success md-btncreate','value'=>Yii::$app->urlManager->createUrl(['create'])]) ?>
-    </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -31,31 +28,47 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             [
-                'attribute'=>'id',
+                'attribute'=>'date',
                 'value'=>function($d){
-                    $url = Yii::$app->urlManager->createUrl(['view','id'=>$d->id]);
-                    return Html::a($d->id,$url);
+                    $url = Yii::$app->urlManager->createUrl(['/cp/client-paid/update','id'=>$d->id]);
+                    return Html::button($d->date,['class'=>'btn btn-link md-btnupdate','value'=>$url]);
                 },
                 'format'=>'raw',
             ],
-            'id',
-            'client_id',
+//                            'id',
+//                            'client_id',
             'price',
-            'payment_id',
+//                            'payment_id',
+            [
+                'attribute'=>'payment_id',
+                'value'=>function($d){
+                    return $d->payment->name;
+                },
+                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\Payment::find()->where(['status'=>1])->all(),'id','name')
+            ],
+            [
+                'attribute'=>'client_id',
+                'value'=>function($d){
+                    return $d->client->name;
+                },
+                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\Client::find()->all(),'id','name')
+            ],
             'description:ntext',
-            //'date',
-            //'deadline',
-            //'status',
-            //'created',
-            //'updated',
-            //'register_id',
-            //'modify_id',
+            'deadline',
             [
                 'attribute'=>'status',
                 'value'=>function($d){
                     return Yii::$app->params['status'][$d->status];
                 },
                 'filter'=>Yii::$app->params['status'],
+            ],
+            [
+                'label'=>'',
+                'format'=>'raw',
+                'value'=>function($d){
+                    $url = Yii::$app->urlManager->createUrl(['/cp/client-paid/delete','id'=>$d->id]);
+                    return Html::a('<span class="fa fa-trash"></span>',$url,['class'=>'btn btn-danger','data-method'=>'post','data-confirm'=>'Are you sure you want to delete this item?']);
+                }
             ],
         ],
     ]); ?>

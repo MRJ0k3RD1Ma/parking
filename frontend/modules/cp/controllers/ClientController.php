@@ -163,7 +163,7 @@ class ClientController extends Controller
             }else{
                 Yii::$app->session->setFlash('error','Ma`lumot saqlashda xatolik');
             }
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->client_id]);
         }
         return $this->renderAjax('pay', [
             'model' => $model,
@@ -189,6 +189,18 @@ class ClientController extends Controller
         return $this->renderAjax('pay', [
             'model' => $model,
         ]);
+    }
+
+    public function actionPaydelete($id){
+        $model = ClientPaid::findOne($id);
+        $model->modify_id = Yii::$app->user->id;
+        $model->status = -1;
+        if($model->save()){
+            Yii::$app->session->setFlash('success','Ma`lumot o`chirildi');
+        }else{
+            Yii::$app->session->setFlash('error','Ma`lumot o`chirishda xatolik');
+        }
+        return $this->redirect(['view','id'=>$model->client_id]);
     }
 
     /**
