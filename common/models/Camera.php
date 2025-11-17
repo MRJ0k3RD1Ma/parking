@@ -25,7 +25,7 @@ class Camera extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'md_parking.camera';
+        return 'camera';
     }
 
     public function rules()

@@ -23,7 +23,7 @@ class Payment extends \yii\db\ActiveRecord
 {
     public static function tableName()
     {
-        return 'md_parking.payment';
+        return 'payment';
     }
 
     public function rules()
