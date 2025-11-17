@@ -7,6 +7,7 @@ use common\models\Car;
 use common\models\CarType;
 use common\models\CarTypePlan;
 use common\models\Client;
+use common\models\Payment;
 use Yii;
 use yii\filters\auth\QueryParamAuth;
 use yii\filters\Cors;
@@ -283,6 +284,14 @@ class DoorController extends Controller
         ];
     }
 
+    public function actionPayment()
+    {
+        $model = Payment::find()->where(['status'=>1])->all();
+        return [
+            'success'=>true,
+            'data'=>ArrayHelper::toArray($model)
+        ];
+    }
     function calcTimes($datetime_from,$datetime_to){
         $from = new \DateTime($datetime_from);
         $to   = new \DateTime($datetime_to);
@@ -304,6 +313,7 @@ class DoorController extends Controller
             'minutes' => $minutes,
         ];
     }
+
 
 
 }

@@ -93,6 +93,12 @@ class SiteController extends Controller
                     'success'=>true,
                     'token' => (string) $token,
                     'data' => $user,
+                    'fiscal'=>[
+                        'mxik'=>Yii::$app->params['mxik'],
+                        "inn"=>Yii::$app->params['inn'],
+                        'comapny_name' => Yii::$app->params['company_name'],
+                        'vat_percent'=>Yii::$app->params['vat_percent']
+                    ],
                 ];
             }else{
                 return [$model->getFirstErrors()];
@@ -118,6 +124,12 @@ class SiteController extends Controller
                 'success'=>true,
                 'token' => (string) $token,
                 'data' => $user,
+                'fiscal'=>[
+                    'mxik'=>Yii::$app->params['mxik'],
+                    "inn"=>Yii::$app->params['inn'],
+                    'comapny_name' => Yii::$app->params['company_name'],
+                    'vat_percent'=>Yii::$app->params['vat_percent']
+                ],
             ];
         }else{
             Yii::$app->response->statusCode = 401;

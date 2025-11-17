@@ -82,7 +82,8 @@ return [
                         'POST'=>'index',
                         'POST calc'=>'calc',
                         'GET type'=>'type',
-                        'POST setfiscal'=>'setfiscal'
+                        'POST setfiscal'=>'setfiscal',
+                        'GET payment'=>'payment'
                     ],
                 ],
             ],

@@ -57,7 +57,13 @@ class UserController extends Controller
         $user = Yii::$app->user->identity;
         return [
             'success'=>true,
-            'data'=>$user
+            'data'=>$user,
+            'fiscal'=>[
+                'mxik'=>Yii::$app->params['mxik'],
+                "inn"=>Yii::$app->params['inn'],
+                'comapny_name' => Yii::$app->params['company_name'],
+                'vat_percent'=>Yii::$app->params['vat_percent']
+            ],
         ];
     }
 
