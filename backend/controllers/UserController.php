@@ -62,7 +62,8 @@ class UserController extends Controller
                 'mxik'=>Yii::$app->params['fiscal']['mxik'],
                 "inn"=>Yii::$app->params['fiscal']['inn'],
                 'comapny_name' => Yii::$app->params['fiscal']['company_name'],
-                'vat_percent'=>Yii::$app->params['fiscal']['vat_percent']
+                'vat_percent'=>Yii::$app->params['fiscal']['vat_percent'],
+                'mxik_name'=>Yii::$app->params['fiscal']['mxik_name']
             ],
         ];
     }

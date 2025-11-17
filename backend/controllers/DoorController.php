@@ -34,7 +34,7 @@ class DoorController extends Controller
         $behaviors['corsFilter']= [
             'class' => Cors::class,
         ];
-        // Content negotiation - JSON formatda javob qaytaradi
+
         $behaviors['contentNegotiator'] = [
             'class' => ContentNegotiator::class,
             'formats' => [
@@ -42,7 +42,7 @@ class DoorController extends Controller
             ],
         ];
 
-        // Bearer Token autentifikatsiya
+
         $behaviors['authenticator'] = [
             'class' => \yii\filters\auth\QueryParamAuth::class,
             'tokenParam' => 'token',
@@ -80,6 +80,7 @@ class DoorController extends Controller
                             'id'=>$model->id,
                             'plate'=>$model->number,
                             'type_id'=>$model->type_id,
+                            'type'=>$model->type->name,
                             'price'=>$model->price,
                             'enter_time'=>$model->enter_time,
                             'exit_time'=>$model->exit_time,
@@ -114,6 +115,7 @@ class DoorController extends Controller
                                     'id'=>$model->id,
                                     'plate'=>$model->number,
                                     'type_id'=>$model->type_id,
+                                    'type'=>$model->type->name,
                                     'price'=>$model->price,
                                     'enter_time'=>$model->enter_time,
                                     'exit_time'=>$model->exit_time,
@@ -193,6 +195,7 @@ class DoorController extends Controller
                     'id'=>$model->id,
                     'plate'=>$model->number,
                     'type_id'=>$model->type_id,
+                    'type'=>$model->type->name,
                     'price'=>$model->price,
                     'enter_time'=>$model->enter_time,
                     'exit_time'=>$model->exit_time,
@@ -254,7 +257,7 @@ class DoorController extends Controller
                     $price = $top->price;
                 }else{
                     $min = CarTypePlan::find()->where(['status'=>1,'type_id'=>$plan->id])->orderBy(['hour'=>SORT_ASC])->one();
-                    if($plan->free_time < $times['minutes']){
+                    if($plan->free_time > $times['minutes']){
                         $price = 0;
                     }else{
                         $price = $min->price;

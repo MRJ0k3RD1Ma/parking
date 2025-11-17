@@ -7,6 +7,7 @@ return [
         'mxik'=>"123",
         "inn"=>"123",
         'company_name' => "Xudoshukur developer MCHJ",
-        'vat_percent'=>0
+        'vat_percent'=>0,
+        'mxik_name'=>'Avtoturargoh xizmati'
     ],
 ];

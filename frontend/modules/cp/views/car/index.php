@@ -42,9 +42,17 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute'=>'payment_id',
                 'value'=>function($model){
-                    return $model->payment->name;
+                    return @$model->payment->name;
                 },
                 'filter'=>ArrayHelper::map(\common\models\Payment::find()->where(['status'=>1])->all(),'id','name'),
+            ],
+            [
+                'label'=>'',
+                'value'=>function($d){
+                    $url = Yii::$app->urlManager->createUrl(['/cp/car/clear','id'=>$d->id]);
+                    return Html::a('<span class="fa fa-refresh"></span>',$url,['class'=>'btn btn-danger']);
+                },
+                'format'=>'raw',
             ],
         ],
     ]); ?>

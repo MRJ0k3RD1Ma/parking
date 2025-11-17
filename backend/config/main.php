@@ -57,6 +57,7 @@ return [
                 'POST auth'=>'site/login',
                 'POST auth/pin'=>'site/login-pin',
                 'POST auth/logout'=>'user/logout',
+                'POST '=>'site/soliq',
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'user',

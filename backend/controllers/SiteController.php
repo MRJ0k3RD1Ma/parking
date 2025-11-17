@@ -97,7 +97,8 @@ class SiteController extends Controller
                         'mxik'=>Yii::$app->params['fiscal']['mxik'],
                         "inn"=>Yii::$app->params['fiscal']['inn'],
                         'company_name' => Yii::$app->params['fiscal']['company_name'],
-                        'vat_percent'=>Yii::$app->params['fiscal']['vat_percent']
+                        'vat_percent'=>Yii::$app->params['fiscal']['vat_percent'],
+                        'mxik_name'=>Yii::$app->params['fiscal']['mxik_name'],
                     ],
                 ];
             }else{
@@ -128,7 +129,8 @@ class SiteController extends Controller
                     'mxik'=>Yii::$app->params['fiscal']['mxik'],
                     "inn"=>Yii::$app->params['fiscal']['inn'],
                     'comapny_name' => Yii::$app->params['fiscal']['company_name'],
-                    'vat_percent'=>Yii::$app->params['fiscal']['vat_percent']
+                    'vat_percent'=>Yii::$app->params['fiscal']['vat_percent'],
+                    'mxik_name'=>Yii::$app->params['fiscal']['mxik_name']
                 ],
             ];
         }else{
@@ -142,5 +144,38 @@ class SiteController extends Controller
 
 
 
+    public function actionSoliq()
+    {
+        $post = Yii::$app->request->post();
+        $method = $post['method'];
+        if($method == 'sale-services'){
+            return [
+                "msg"=> "succes",
+                "code"=> "0",
+                "resInfo"=> [
+                    "jsonrpc"=> "2.0",
+                    "result"=> [
+                        "TerminalID"=> "UZ191211501012",
+                        "ReceiptSeq"=> "1847",
+                        "DateTime"=> "20241014121646",
+                        "FiscalSign"=> "454042927337",
+                        "AppletVersion"=> "0323",
+                        "QRCodeURL"=> "https://ofd.soliq.uz/check?t=UZ191211501012&r=1847&c=20241014121646&s=454042927337"
+                    ],
+                    "id"=> 1
+                ]
+            ];
+        }else{
+            return [
+                "msg"=> "succes",
+                "code"=> "0",
+                "resInfo"=> [
+                    "token"=> "00120000010b02056a200014003100314090",
+                    "date"=> "2024-10-14 10:12:43"
+                ]
+            ];
+        }
+
+    }
 
 }

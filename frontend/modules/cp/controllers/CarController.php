@@ -136,6 +136,14 @@ class CarController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionClear($id)
+    {
+        $model = Car::findOne($id);
+        $model->payment_id = null;
+        $model->save(false);
+        return $this->redirect(['index']);
+    }
+
     /**
      * Finds the Car model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
